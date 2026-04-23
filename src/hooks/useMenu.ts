@@ -13,7 +13,7 @@ export function useMenu(category: string) {
       setLoading(true);
 
       const data = await get_menu(category);
-      
+
       setitems(data);
       setLoading(false);
     };
@@ -21,4 +21,6 @@ export function useMenu(category: string) {
     fetchData();
 
   }, [category]);
+
+  return {items, loading}
 }
