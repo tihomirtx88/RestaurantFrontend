@@ -4,7 +4,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
       <div className="collapse navbar-collapse">
-        <div className="navbar-nav ms-auto py-0 pe-4">
+        <div className="d-flex align-items-center justify-content-center w-100">
           <Link to="/" className="navbar-brand p-0">
             <h1 className="text-primary m-0">
               <i className="fa fa-utensils me-3"></i>Restoran
