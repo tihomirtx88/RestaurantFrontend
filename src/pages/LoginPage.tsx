@@ -8,11 +8,16 @@ function LoginPage(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [loading, setLoading] = useState(false);
+
     const auth = useAuth()
     const navigate = useNavigate()
 
     const handleLogin = async() => {
         try {
+
+            setLoading(true);
+            
             const res = await login(email, password);
 
             auth.login(res.access_token);
@@ -25,6 +30,9 @@ function LoginPage(){
             console.log(error);
             
             alert("Login falied")
+        } finally{
+
+          setLoading(false);
         }
     };
 
@@ -45,8 +53,8 @@ function LoginPage(){
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button className="btn btn-primary" onClick={handleLogin}>
-        Login
+      <button className="btn btn-primary" onClick={handleLogin} disabled={loading}>
+         {loading ? "Loading..." : "Login"}
       </button>
     </div>
   );
