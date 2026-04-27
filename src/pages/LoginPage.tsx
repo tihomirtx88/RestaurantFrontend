@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
+import { toast } from "react-toastify";
 
 function LoginPage(){
     const [email, setEmail] = useState("");
@@ -15,10 +16,12 @@ function LoginPage(){
             const res = await login(email, password);
 
             auth.login(res.access_token);
+            toast("Success login")
 
             navigate("/");
 
         } catch (error) {
+            toast("Wrong email or password")
             console.log(error);
             
             alert("Login falied")
