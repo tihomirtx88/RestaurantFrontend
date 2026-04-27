@@ -1,12 +1,9 @@
-import Navbar from "../components/Navbar";
+import MenuSection from "../components/MenuSection";
 
 function MenuPage() {
   return (
     <>
-      <Navbar />
-      <div className="container">
-        <h1>Menu</h1>
-      </div>
+      <MenuSection/>
     </>
   );
 }
