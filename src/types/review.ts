@@ -4,4 +4,5 @@ export type Review = {
   comment: string;
   user_id: number;
   menu_item_id: number;
+  created_at?: string;
 };
