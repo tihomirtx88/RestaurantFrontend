@@ -1,11 +1,18 @@
+import { useState } from "react";
+import ReviewList from "./ReviewList";
+import ReviewForm from "./ReviewForm";
+
 type Props = {
+  id: number;
   name: string;
   price: number;
   description: string;
   image: string;
 };
 
-function MenuItemCard({ name, price, description, image }: Props) {
+function MenuItemCard({id, name, price, description, image }: Props) {
+  const [refresh, setRefresh] = useState(1);
+
   return (
     <div className="col-lg-6">
       <div className="d-flex align-items-center">
@@ -23,6 +30,16 @@ function MenuItemCard({ name, price, description, image }: Props) {
           </h5>
 
           <small className="fst-italic">{description}</small>
+        </div>
+
+        {/* ⭐ REVIEWS */}
+        <div className="mt-3">
+          <ReviewList menuItemId={id} key={refresh} />
+
+          <ReviewForm
+            menuItemId={id}
+            onSuccess={() => setRefresh((prev) => prev + 1)}
+          />
         </div>
       </div>
     </div>

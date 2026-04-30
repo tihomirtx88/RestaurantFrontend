@@ -43,6 +43,7 @@ function MenuSection() {
           {items.map((item) => (
             <MenuItemCard
               key={item.id}
+              id={item.id}
               name={item.name}
               price={item.price}
               description={item.description}
