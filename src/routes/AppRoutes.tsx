@@ -9,6 +9,7 @@ import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
 import BookingPage from "../pages/BookingPage";
 import TestimonialPage from "../pages/TestimonialPage";
+import MyReservationsPage from "../pages/MyReservationsPage";
 
 function AppRoutes() {
   return (
@@ -20,6 +21,14 @@ function AppRoutes() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/booking" element={<BookingPage />} />
         <Route path="/testimonials" element={<TestimonialPage />} />
+        <Route
+          path="/my-reservations"
+          element={
+            <ProtectedRoute>
+              <MyReservationsPage />
+            </ProtectedRoute>
+          }
+        />
 
           {/* public  */}
           <Route path="/" element={<HomaPage />} />

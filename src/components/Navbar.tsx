@@ -8,6 +8,7 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
       <div className="collapse navbar-collapse">
         <div className="d-flex align-items-center justify-content-center w-100">
+          
           {/* LEFT */}
           <div className="d-flex align-items-center">
             <Link to="/" className="navbar-brand p-0">
@@ -39,13 +40,22 @@ function Navbar() {
                 </Link>
               </>
             ) : (
-              <span
-                className="nav-item nav-link"
-                onClick={auth.logout}
-                style={{ cursor: "pointer" }}
-              >
-                Logout
-              </span>
+              <>
+                {" "}
+                <span
+                  className="nav-item nav-link"
+                  onClick={auth.logout}
+                  style={{ cursor: "pointer" }}
+                >
+                  Logout
+                </span>
+                <Link
+                  to="/my-reservations"
+                  className="nav-item nav-link"
+                >
+                  My Reservations
+                </Link>
+              </>
             )}
           </div>
         </div>
