@@ -1,0 +1,21 @@
+/* animation base */
+.animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+/* when visible */
+.animate.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* variations */
+.slide-left {
+  transform: translateX(-40px);
+}
+
+.slide-left.show {
+  transform: translateX(0);
+}
