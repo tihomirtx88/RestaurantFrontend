@@ -40,8 +40,8 @@ function ReviewForm({ menuItemId, onSuccess }: ReviewFormProps) {
 
         onSuccess()
     } catch (err: unknown) {
-         toast.error("Failed to add review");
-         console.log(err);
+          console.log(err.response?.data);
+          toast.error(JSON.stringify(err.response?.data));
     } finally{
         setLoading(false)
     }
