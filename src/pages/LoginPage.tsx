@@ -1,61 +1,58 @@
-import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  email: string;
+  password: string;
+};
 
 function LoginPage(){
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
-    const [loading, setLoading] = useState(false);
+    const {register, handleSubmit, formState: {errors}} = useForm<FormData>()   
 
     const auth = useAuth()
     const navigate = useNavigate()
 
-    const handleLogin = async() => {
-        try {
+    const onsubmit = async (data:FormData) =>{
+      try {
+        const res = await login(data.email, data.password);
 
-            setLoading(true);
-            
-            const res = await login(email, password);
+        auth.login(res.access_token);
 
-            auth.login(res.access_token);
-            toast("Success login")
+        navigate("/"); 
 
-            navigate("/");
-
-        } catch (error) {
-            toast("Wrong email or password")
-            console.log(error);
-            
-            alert("Login falied")
-        } finally{
-
-          setLoading(false);
-        }
-    };
+      } catch (error) {
+        toast.error("Invalid credentials");
+        console.log(error);
+        
+      }
+    }
 
     return (
     <div className="container mt-5">
       <h2>Login</h2>
 
-      <input
-        className="form-control my-2"
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <form onSubmit={handleSubmit(onsubmit)}>
+             <input
+          className="form-control my-2"
+          placeholder="Email"
+          {...register("email", { required: "Email required" })}
+        />
+        {errors.email && <p className="text-danger">{errors.email.message}</p>}
 
-      <input
-        type="password"
-        className="form-control my-2"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          type="password"
+          className="form-control my-2"
+          placeholder="Password"
+          {...register("password", { required: "Password required" })}
+        />
+        {errors.password && <p className="text-danger">{errors.password.message}</p>}
 
-      <button className="btn btn-primary" onClick={handleLogin} disabled={loading}>
-         {loading ? "Loading..." : "Login"}
-      </button>
+        <button className="btn btn-primary w-100">Login</button>
+      </form>
     </div>
   );
     
