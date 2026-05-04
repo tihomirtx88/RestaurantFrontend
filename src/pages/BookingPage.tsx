@@ -1,77 +1,87 @@
-import { useState } from "react";
 import { createReservation } from "../api/reservation";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  reservation_date: string;
+  guests: number;
+};
 
 function BookingPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+    reset,
+  } = useForm<FormData>();
 
-    const [date, setDate] = useState("");
-    const [guests, setGuests] = useState(1);
-    const [loading, setLoading] = useState(false);
-
-    const handleSubmit = async ()=> {
-      try {
-        setLoading(true);
-
-        await createReservation({
-          reservation_data: date,
-          gueast: Number(guests)
-        });
-
-        toast.success("Reservation created successfully!");
-
-        setDate("");
-        setGuests(1); 
-
-      } catch (err: unknown) {
-        console.log(err);
-        
-        toast.error("Failed to create reservation");
-      }finally{
-        setLoading(false);
-      }
-    };
+  const onSubmit = async (data: FormData) => {
+    try {
+      await createReservation(data);
+      toast.success("Reservation created!");
+      reset();
+    } catch (err) {
+      console.error(err);
+      toast.error("Error creating reservation");
+    }
+  };
 
   return (
-      <div className="container-xxl py-5">
-        <div className="container">
-          <h1 className="text-center mb-5">Book A Table</h1>
+    <div className="container-xxl py-5">
+      <div className="container">
+        <h1 className="text-center mb-5">Book A Table</h1>
 
-            {loading && <Loader />}
+        {isSubmitting && <Loader />}
 
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row g-5">
             <div className="col-md-6">
-
+              {/* DATE */}
               <input
                 type="datetime-local"
-                className="form-control mb-3"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                className="form-control mb-2"
+                {...register("reservation_date", {
+                  required: "Date is required",
+                })}
               />
+              {errors.reservation_date && (
+                <small className="text-danger">
+                  {errors.reservation_date.message}
+                </small>
+              )}
 
+              {/* GUESTS */}
               <input
                 type="number"
-                className="form-control mb-3"
-                value={guests}
-                onChange={(e) => setGuests(Number(e.target.value))}
+                className="form-control mb-2"
+                placeholder="Number of guests"
+                {...register("guests", {
+                  required: "Guests required",
+                  min: { value: 1, message: "At least 1 guest" },
+                })}
               />
 
-              <button
-                className="btn btn-primary w-100"
-                onClick={handleSubmit}
-                disabled={loading}
-              >
-                {loading ? "Booking..." : "Book Now"}
-              </button>
+              {errors.guests && (
+                <small className="text-danger">{errors.guests.message}</small>
+              )}
 
+              <button
+                type="submit"
+                className="btn btn-primary w-100"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Booking..." : "Book Now"}
+              </button>
             </div>
 
             <div className="col-md-6">
               <img src="/img/about-1.jpg" className="img-fluid rounded" />
             </div>
           </div>
-        </div>
+        </form>
       </div>
+    </div>
   );
 }
 
