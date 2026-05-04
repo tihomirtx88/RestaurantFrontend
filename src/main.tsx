@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext.tsx'
 import ToastProvider from './components/ToastProvider.tsx'
 
 
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
