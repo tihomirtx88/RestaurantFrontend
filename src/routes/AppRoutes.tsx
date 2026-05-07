@@ -10,43 +10,65 @@ import ContactPage from "../pages/ContactPage";
 import BookingPage from "../pages/BookingPage";
 import TestimonialPage from "../pages/TestimonialPage";
 import MyReservationsPage from "../pages/MyReservationsPage";
+import AdminRoute from "./AdminRoute";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import MenuManager from "../pages/admin/CategoryManager";
+import CreateMenuItem from "../pages/admin/CreateMenuItem";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-        <Route path="/menu" element={<MenuPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/booking" element={<BookingPage />} />
-        <Route path="/testimonials" element={<TestimonialPage />} />
-        <Route
-          path="/my-reservations"
-          element={
-            <ProtectedRoute>
-              <MyReservationsPage />
-            </ProtectedRoute>
-          }
-        />
+          <Route path="/menu" element={<MenuPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/testimonials" element={<TestimonialPage />} />
+
+          <Route
+            path="/my-reservations"
+            element={
+              <ProtectedRoute>
+                <MyReservationsPage />
+              </ProtectedRoute>
+            }
+          />
 
           {/* public  */}
           <Route path="/" element={<HomaPage />} />
 
-          {/* Protected */}
+          {/* ADMIN ROUTES */}
           <Route
-            path="/dashboard"
+            path="/admin"
             element={
-              <ProtectedRoute>
-                <div>Dashboard</div>
-              </ProtectedRoute>
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/menu"
+            element={
+              <AdminRoute>
+                <MenuManager />
+              </AdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/menu/create"
+            element={
+              <AdminRoute>
+                <CreateMenuItem />
+              </AdminRoute>
             }
           />
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-
       </Routes>
     </BrowserRouter>
   );
