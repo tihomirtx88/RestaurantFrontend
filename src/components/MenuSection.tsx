@@ -57,7 +57,7 @@ function MenuSection() {
 
         {/* Items */}
         <div className="row g-4">
-          {items.map((item) => (
+          {items.map((item, index) => (
             <MenuItemCard
               key={item.id}
               id={item.id}
@@ -65,6 +65,7 @@ function MenuSection() {
               price={item.price}
               description={item.description}
               image={item.image_url}
+              delay={`${index * 0.1}s`}
             />
           ))}
         </div>

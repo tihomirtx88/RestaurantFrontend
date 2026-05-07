@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
+import useAnimateOnScroll from "../hooks/useAnimateOnScroll";
 
 type Props = {
   id: number;
@@ -8,13 +9,19 @@ type Props = {
   price: number;
   description: string;
   image: string;
+   delay?: string;
 };
 
-function MenuItemCard({id, name, price, description, image }: Props) {
+function MenuItemCard({ id, name, price, description, image, delay  }: Props) {
   const [refresh, setRefresh] = useState(1);
+  const ref = useAnimateOnScroll();
 
   return (
-    <div className="col-lg-6">
+    <div
+      ref={ref}
+      className="col-lg-6 animate"
+      style={{ transitionDelay: delay }}
+    >
       <div className="d-flex align-items-center">
         <img
           className="flex-shrink-0 img-fluid rounded"
@@ -32,7 +39,6 @@ function MenuItemCard({id, name, price, description, image }: Props) {
           <small className="fst-italic">{description}</small>
         </div>
 
-        {/* ⭐ REVIEWS */}
         <div className="mt-3">
           <ReviewList menuItemId={id} key={refresh} />
 
