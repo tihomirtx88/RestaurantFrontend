@@ -57,7 +57,7 @@ function MenuSection() {
 
         {/* Items */}
         <div className="row g-4">
-          {items.map((item, index) => (
+          {items.slice(0, 3).map((item, index) => (
             <MenuItemCard
               key={item.id}
               id={item.id}

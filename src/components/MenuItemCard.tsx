@@ -9,43 +9,58 @@ type Props = {
   price: number;
   description: string;
   image: string;
-   delay?: string;
+  delay?: string;
 };
 
-function MenuItemCard({ id, name, price, description, image, delay  }: Props) {
+function MenuItemCard({ id, name, price, description, image, delay }: Props) {
   const [refresh, setRefresh] = useState(1);
   const ref = useAnimateOnScroll();
+  const [showReviews, setShowReviews] = useState(false);
 
   return (
     <div
       ref={ref}
-      className="col-lg-6 animate"
+      className="col-12 animate"
       style={{ transitionDelay: delay }}
     >
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-start menu-item compact">
+        {/* IMAGE */}
         <img
           className="flex-shrink-0 img-fluid rounded"
           src={image}
           alt={name}
-          style={{ width: "80px" }}
+          style={{ width: "70px" }}
         />
 
-        <div className="w-100 d-flex flex-column text-start ps-4">
-          <h5 className="d-flex justify-content-between border-bottom pb-2">
+        {/* CONTENT */}
+        <div className="w-100 d-flex flex-column text-start ps-3">
+          {/* NAME + PRICE */}
+          <h6 className="d-flex justify-content-between border-bottom pb-1 mb-1">
             <span>{name}</span>
             <span className="text-primary">${price}</span>
-          </h5>
+          </h6>
 
-          <small className="fst-italic">{description}</small>
-        </div>
+          {/* DESCRIPTION */}
+          <small className="text-muted">{description}</small>
 
-        <div className="mt-3">
-          <ReviewList menuItemId={id} key={refresh} />
+          {/* TOGGLE BUTTON */}
+          <button
+            className="btn btn-sm btn-link p-0 mt-1 text-primary"
+            onClick={() => setShowReviews(!showReviews)}
+          >
+            {showReviews ? "Hide reviews" : "Show reviews"}
+          </button>
 
-          <ReviewForm
-            menuItemId={id}
-            onSuccess={() => setRefresh((prev) => prev + 1)}
-          />
+          {/* REVIEWS (toggle) */}
+          {showReviews && (
+            <div className="mt-2 review-box">
+              <ReviewList menuItemId={id} key={refresh} />
+              <ReviewForm
+                menuItemId={id}
+                onSuccess={() => setRefresh((prev) => prev + 1)}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

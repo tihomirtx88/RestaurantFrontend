@@ -561,3 +561,42 @@
   height: 3px;
   background: #FEA116;
 }
+
+.menu-item {
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.menu-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.menu-item.compact {
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.menu-item.compact:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.menu-item.compact h6 {
+  font-size: 15px;
+}
+
+.menu-item.compact small {
+  font-size: 12px;
+}
+
+/* reviews box */
+.review-box {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+}
