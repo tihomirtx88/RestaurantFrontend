@@ -13,7 +13,7 @@ export const get_menu = async(category?: string): Promise<MenuItem[]> =>{
 export const createMenuItem = (data: CreateMenuItem) =>
   api.post<MenuItem>("/menu", data);
 
-export const updateMenuItem = (id: number, data: UpdateMenuItemч) =>
+export const updateMenuItem = (id: number, data: UpdateMenuItem) =>
   api.patch<MenuItem>(`/menu/${id}`, data);
 
 export const deleteMenuItem = (id: number) =>
