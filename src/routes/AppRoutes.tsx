@@ -12,7 +12,7 @@ import TestimonialPage from "../pages/TestimonialPage";
 import MyReservationsPage from "../pages/MyReservationsPage";
 import AdminRoute from "./AdminRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import MenuManager from "../pages/admin/CategoryManager";
+import MenuManager from "../pages/admin/MenuManager";
 import CreateMenuItem from "../pages/admin/CreateMenuItem";
 
 function AppRoutes() {

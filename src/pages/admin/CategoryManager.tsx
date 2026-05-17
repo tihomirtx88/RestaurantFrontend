@@ -3,7 +3,7 @@ import { get_menu } from "../../api/menu";
 import Loader from "../../components/Loader";
 import type { MenuItem } from "../../types/menu";
 
-function MenuManager() {
+function CategoryManager() {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,4 +29,4 @@ function MenuManager() {
   );
 }
 
-export default MenuManager;
+export default CategoryManager;
