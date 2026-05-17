@@ -7,7 +7,7 @@ function AdminRoute({ children }: { children: JSX.Element }) {
 
   if (!user) return <Navigate to="/login" />;
 
-  if (role !== "admin") return <Navigate to="/" />;
+  if (role?.toLocaleLowerCase() !== "admin") return <Navigate to="/" />;
 
   return children;
 }

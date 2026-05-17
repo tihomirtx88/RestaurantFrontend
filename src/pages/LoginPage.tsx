@@ -20,7 +20,10 @@ function LoginPage(){
       try {
         const res = await login(data.email, data.password);
 
-        auth.login(res.access_token);
+        auth.login(res.access_token, res.role);
+
+        console.log(res);
+        
 
         navigate("/"); 
 

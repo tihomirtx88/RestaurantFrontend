@@ -10,9 +10,11 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+
   const [user, setUser] = useState<string | null>(
     localStorage.getItem("token"),
   );
+  
   const [role, setRole] = useState<string | null>(
     localStorage.getItem("role") 
   )
