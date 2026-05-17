@@ -14,6 +14,7 @@ import AdminRoute from "./AdminRoute";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import MenuManager from "../pages/admin/MenuManager";
 import CreateMenuItem from "../pages/admin/CreateMenuItem";
+import EditMenuItem from "../pages/admin/EditMenuItem";
 
 function AppRoutes() {
   return (
@@ -66,6 +67,15 @@ function AppRoutes() {
             }
           />
         </Route>
+
+        <Route
+          path="/admin/menu/edit/:id"
+          element={
+            <AdminRoute>
+              <EditMenuItem />
+            </AdminRoute>
+          }
+        />
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
