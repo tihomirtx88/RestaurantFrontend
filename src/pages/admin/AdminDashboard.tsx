@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import type { Stats } from "../../types/stats";
 import { getStats } from "../../api/stats";
+import Loader from "../../components/Loader";
 
 function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
@@ -23,6 +24,8 @@ function AdminDashboard() {
   }, []);
 
   if (!stats) return <p>No stats</p>;
+
+   if (loading) return <Loader />;
 
   return (
     <div className="container py-5">
