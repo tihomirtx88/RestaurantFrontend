@@ -2,6 +2,7 @@ import { deleteMenuItem, get_menu } from "../../api/menu";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { MenuItem } from "../../types/menu";
 
 function MenuManager() {
   const queryClient = useQueryClient();
@@ -14,16 +15,40 @@ function MenuManager() {
   const deleteMutation = useMutation({
     mutationFn: deleteMenuItem,
 
+    onMutate: async (id) => {
+      // cancel outgoing refetches
+      await queryClient.cancelQueries({
+        queryKey: ["menu"],
+      });
+
+      // snapshot previous data
+      const previousItems = queryClient.getQueryData<MenuItem[]>(["menu"]);
+
+      //optimistic udpate
+      queryClient.setQueryData(["menu"], (old: MenuItem[] | undefined) =>
+        old?.filter((item) => item.id !== id),
+      );
+
+      // return rollback context
+      return { previousItems };
+    },
+
+    onError: (_err, _id, context) => {
+      toast.error("Delete failed");
+
+      queryClient.setQueryData(["menu"], context?.previousItems);
+    },
+
+
     onSuccess: () => {
       toast.success("Deleted");
+    },
 
+    // ALWAYS REFRESH
+    onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ["menu"],
       });
-    },
-
-    onError: () => {
-      toast.error("Error deleting");
     },
   });
 
