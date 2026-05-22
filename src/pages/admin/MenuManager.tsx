@@ -1,36 +1,37 @@
-import { useEffect, useState } from "react";
 import { deleteMenuItem, get_menu } from "../../api/menu";
 import Loader from "../../components/Loader";
-import type { MenuItem } from "../../types/menu";
 import { toast } from "react-toastify";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 function MenuManager() {
-  const [items, setItems] = useState<MenuItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    get_menu()
-      .then(setItems)
-      .finally(() => setLoading(false));
-  }, []);
+  const { data: items, isLoading } = useQuery({
+    queryKey: ["menu"],
+    queryFn: () => get_menu(),
+  });
 
-  const handleDelete = async (id: number) => {
-    try {
-      await deleteMenuItem(id);
+  const deleteMutation = useMutation({
+    mutationFn: deleteMenuItem,
+
+    onSuccess: () => {
       toast.success("Deleted");
 
-      setItems((prev) => prev.filter((i) => i.id !== id));
-    } catch (error) {
-      toast.error("Error deleting");
-      console.log(error);
-    }
-  };
+      queryClient.invalidateQueries({
+        queryKey: ["menu"],
+      });
+    },
 
-  if (loading) return <Loader />;
+    onError: () => {
+      toast.error("Error deleting");
+    },
+  });
+
+  if (isLoading) return <Loader />;
 
   return (
     <>
-      {items.map((item) => (
+      {items?.map((item) => (
         <div
           key={item.id}
           className="border p-3 my-3 rounded bg-white d-flex justify-content-between align-items-center"
@@ -45,7 +46,7 @@ function MenuManager() {
           <div className="d-flex align-items-center gap-2">
             <button
               className="btn btn-danger btn-sm"
-              onClick={() => handleDelete(item.id)}
+              onClick={() => deleteMutation.mutate(item.id)}
             >
               Delete
             </button>
