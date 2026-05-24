@@ -73,7 +73,6 @@ function CategoryManager() {
         <button className="btn btn-primary" onClick={handleCreate}>
           Create
         </button>
-
       </div>
 
       {/* CATEGORY LIST */}
@@ -86,12 +85,21 @@ function CategoryManager() {
             <strong>{cat.name}</strong>
           </div>
 
-          <button
-            className="btn btn-danger btn-sm"
-            onClick={() => handleDelete(cat.id)}
-          >
-            Delete
-          </button>
+          <div className="d-flex gap-2">
+            <a
+              href={`/admin/categories/edit/${cat.id}`}
+              className="btn btn-warning btn-sm"
+            >
+              Edit
+            </a>
+
+            <button
+              className="btn btn-danger btn-sm"
+              onClick={() => handleDelete(cat.id)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>
